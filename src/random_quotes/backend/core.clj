@@ -7,12 +7,22 @@
    [ring.middleware.json :as js]
    [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
    [ring.middleware.reload :refer [wrap-reload]]
+   [random-quotes.backend.api :as api]
+   [org.httpkit.client :as client]
    [random-quotes.backend.routes :as routes])
   (:gen-class))
 
 
+(defn fetch-external-api []
+  (let [response @(client/get "https://api.adviceslip.com/advice"
+                              {:as :json})]
+    (get response :body)))
+
+
 (defroutes app-routes
-  (GET "/" [] routes/echo-route)
+  (GET "/" [] routes/echo-route
+    (let [data (api/fetch-external-api)]
+      (println (str "random advice: " data))))
   (route/not-found "Page not found"))
 
 
