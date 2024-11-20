@@ -19,9 +19,12 @@
                  [cheshire "5.11.0"]
                  [http-kit "2.3.0"]
                  [clj-http "2.3.0"]
-                 [lynxeyes/dotenv "1.0.2"]]
-  :main ^:skip-aot random-quotes.backend.core
+                 [ns-tracker "0.4.0"]
+                 [lynxeyes/dotenv "1.0.2"]
+                 [re-frame "1.4.3"]]
+  :plugins [[lein-environ "1.2.0"]]
+  :main ^:skip-aot random-quotes.api.core.fetch-api
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
-                       :dev {:main random-quotes.backend.core/-dev-main}}})
+                       :dev {:main random-quotes.api.core/-dev-main}}})
